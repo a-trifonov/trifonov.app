@@ -1,0 +1,34 @@
+version: "3.1"
+services:
+
+    mysql:
+      image: mysql:5.7
+      container_name: trifonov-app-mysql
+      working_dir: /var/www/trifonov.app
+      environment:
+        - MYSQL_ROOT_PASSWORD=123321
+        - MYSQL_DATABASE=trifonov_app
+        - MYSQL_USER=trifonov
+        - MYSQL_PASSWORD=trifonov
+      volumes:
+        - ./data:/docker-entrypoint-initdb.d
+      ports:
+        - "9002:3306"
+
+    webserver:
+      image: nginx:1.10.3
+      container_name: trifonov-app-webserver
+      working_dir: /var/www/trifonov.app
+      volumes:
+          - .:/var/www/trifonov.app
+          - ./phpdocker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      ports:
+       - "9000:80"
+
+    php-fpm:
+      build: phpdocker/php-fpm
+      container_name: trifonov-app-php-fpm
+      working_dir: /var/www/trifonov.app
+      volumes:
+        - .:/var/www/trifonov.app
+        - ./phpdocker/php-fpm/php-ini-overrides.ini:/etc/php/7.0/fpm/conf.d/99-overrides.ini
