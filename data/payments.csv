@@ -1,0 +1,4 @@
+payment_number,amount,currency,payment_info
+P115, 256, USD, L111
+P116, 10000, RUB, L111
+P117, 156, EUR, L111

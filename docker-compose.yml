@@ -26,7 +26,7 @@ services:
        - "9000:80"
 
     php-fpm:
-      build: phpdocker/php-fpm
+      build: phpdocker/php-fpm/
       container_name: trifonov-app-php-fpm
       working_dir: /var/www/trifonov.app
       volumes:
